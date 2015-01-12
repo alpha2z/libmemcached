@@ -1,5 +1,6 @@
 /* -*- Mode: C; tab-width: 2; c-basic-offset: 2; indent-tabs-mode: nil -*- */
-#pragma once
+#ifndef STORAGE_H
+#define STORAGE_H
 
 struct item {
   uint64_t cas;
@@ -22,3 +23,5 @@ struct item* create_item(const void* key, size_t nkey, const void *data,
 bool delete_item(const void* key, size_t nkey);
 void flush(uint32_t when);
 void release_item(struct item* item);
+
+#endif

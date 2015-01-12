@@ -1,19 +1,9 @@
-/* LibMemcached
- * Copyright (C) 2006-2009 Brian Aker
- * All rights reserved.
- *
- * Use and distribution licensed under the BSD license.  See
- * the COPYING file in the parent directory for full text.
- *
- * Summary:
- *
- */
-
-#pragma once
+#ifndef __CLIENT_OPTIONS_H__
+#define __CLIENT_OPTIONS_H__
 
 typedef struct memcached_help_text_st memcached_help_text_st;
 
-enum memcached_options {
+typedef enum {
   OPT_SERVERS= 's',
   OPT_VERSION= 'V',
   OPT_HELP= 'h',
@@ -34,12 +24,7 @@ enum memcached_options {
   OPT_FLUSH,
   OPT_HASH,
   OPT_BINARY,
-  OPT_UDP,
-  OPT_BUFFER,
-  OPT_USERNAME,
-  OPT_PASSWD,
-  OPT_STAT_ARGS,
-  OPT_SERVER_VERSION,
-  OPT_QUIET,
-  OPT_FILE= 'f'
-};
+  OPT_UDP
+} memcached_options;
+
+#endif /* CLIENT_OPTIONS */

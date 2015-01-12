@@ -4,8 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: libmemcached
-URL: http://libmemcachd.org/
-Description: libmemcached C/C++ library.
+Description: libmemcached C library.
 Version: @VERSION@
-Libs: -L${libdir} -lmemcached -lmemcachedutil
+Libs: -L${libdir} -lmemcached
 Cflags: -I${includedir}

@@ -1,179 +1,61 @@
-/*  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
- * 
- *  LibMemcached
- *
- *  Copyright (C) 2011 Data Differential, http://datadifferential.com/
- *  Copyright (C) 2006-2009 Brian Aker
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are
- *  met:
- *
- *      * Redistributions of source code must retain the above copyright
- *  notice, this list of conditions and the following disclaimer.
- *
- *      * Redistributions in binary form must reproduce the above
- *  copyright notice, this list of conditions and the following disclaimer
- *  in the documentation and/or other materials provided with the
- *  distribution.
- *
- *      * The names of its contributors may not be used to endorse or
- *  promote products derived from this software without specific prior
- *  written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- */
-
 /*
   Common include file for libmemached
 */
 
-#pragma once
+#ifndef LIBMEMCACHED_COMMON_H
+#define LIBMEMCACHED_COMMON_H
 
-#include <mem_config.h>
+#include "config.h"
 
-#ifdef __cplusplus
-# include <cstddef>
-# include <cstdio>
-# include <cstdlib>
-# include <cstring>
-# include <ctime>
-# include <cctype>
-# include <cerrno>
-# include <climits>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <limits.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/un.h>
+#include <netinet/tcp.h>
+#ifdef TIME_WITH_SYS_TIME
+# include <sys/time.h>
+# include <time.h>
 #else
-# ifdef HAVE_STDDEF_H
-#  include <stddef.h>
-# endif
-# ifdef HAVE_STDLIB_H
-#  include <stdio.h>
-# endif
-# ifdef HAVE_STDLIB_H
-#  include <stdlib.h>
-# endif
-# include <string.h>
-# ifdef HAVE_TIME_H
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# else
 #  include <time.h>
 # endif
-# ifdef HAVE_ERRNO_H
-#  include <errno.h>
-# endif
-# ifdef HAVE_LIMITS_H
-#  include <limits.h>
-# endif
 #endif
 
-#ifdef HAVE_SYS_UN_H
-# include <sys/un.h>
-#endif
+/* Define this here, which will turn on the visibilty controls while we're
+ * building libmemcached.
+ */
+#define BUILDING_LIBMEMCACHED 1
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
 
-#ifdef HAVE_FCNTL_H
-# include <fcntl.h>
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
-
-#ifdef HAVE_SYS_SOCKET_H
-# include <sys/socket.h>
-#endif
-
-#ifdef HAVE_STRINGS_H
-# include <strings.h>
-#endif
-
-#ifdef HAVE_DLFCN_H
-# include <dlfcn.h>
-#endif
-
-#if defined(_WIN32)
-# include "libmemcached/windows.hpp"
-#endif
-
-#include <libmemcached-1.0/memcached.h>
-#include "libmemcached/watchpoint.h"
-#include "libmemcached/is.h"
-typedef struct memcached_st Memcached;
-
-#ifdef HAVE_POLL_H
-# include <poll.h>
-#else
-# include "libmemcached/poll.h"
-#endif
-
-#ifdef __cplusplus
-memcached_instance_st* memcached_instance_fetch(memcached_st *ptr, uint32_t server_key);
-#endif
+#include "libmemcached/memcached.h"
+#include "libmemcached/memcached_watchpoint.h"
 
 /* These are private not to be installed headers */
-#include "libmemcached/error.hpp"
-#include "libmemcached/memory.h"
-#include "libmemcached/io.h"
-#ifdef __cplusplus
-# include "libmemcached/string.hpp"
-# include "libmemcached/memcached/protocol_binary.h"
-# include "libmemcached/io.hpp"
-# include "libmemcached/udp.hpp"
-# include "libmemcached/do.hpp"
-# include "libmemcached/socket.hpp"
-# include "libmemcached/connect.hpp"
-# include "libmemcached/allocators.hpp"
-# include "libmemcached/hash.hpp"
-# include "libmemcached/quit.hpp"
-# include "libmemcached/instance.hpp"
-# include "libmemcached/server_instance.h"
-# include "libmemcached/server.hpp"
-# include "libmemcached/flag.hpp"
-# include "libmemcached/behavior.hpp"
-# include "libmemcached/sasl.hpp"
-# include "libmemcached/server_list.hpp"
-#endif
-
-#include "libmemcached/internal.h"
-#include "libmemcached/array.h"
+#include "libmemcached/memcached_io.h"
+#include "libmemcached/memcached_internal.h"
 #include "libmemcached/libmemcached_probes.h"
+#include "libmemcached/memcached/protocol_binary.h"
 #include "libmemcached/byteorder.h"
-#include "libmemcached/initialize_query.h"
 
-#ifdef __cplusplus
-# include "libmemcached/response.h"
-# include "libmemcached/namespace.h"
-#else
-# include "libmemcached/virtual_bucket.h"
-#endif
+/* string value */
+struct memcached_continuum_item_st {
+  uint32_t index;
+  uint32_t value;
+};
 
-#ifdef __cplusplus
-# include "libmemcached/backtrace.hpp"
-# include "libmemcached/assert.hpp"
-# include "libmemcached/server.hpp"
-# include "libmemcached/key.hpp"
-# include "libmemcached/encoding_key.h"
-# include "libmemcached/result.h"
-# include "libmemcached/version.hpp"
-#endif
-
-#include "libmemcached/continuum.hpp"
 
 #if !defined(__GNUC__) || (__GNUC__ == 2 && __GNUC_MINOR__ < 96)
 
@@ -182,41 +64,105 @@ memcached_instance_st* memcached_instance_fetch(memcached_st *ptr, uint32_t serv
 
 #else
 
-#define likely(x)       if(__builtin_expect((x) != 0, 1))
-#define unlikely(x)     if(__builtin_expect((x) != 0, 0))
+#define likely(x)       if(__builtin_expect(!!(x), 1))
+#define unlikely(x)     if(__builtin_expect((x), 0))
 #endif
+
 
 #define MEMCACHED_BLOCK_SIZE 1024
 #define MEMCACHED_DEFAULT_COMMAND_SIZE 350
 #define SMALL_STRING_LEN 1024
 #define HUGE_STRING_LEN 8196
 
-#ifdef __cplusplus
-extern "C" {
+
+typedef enum {
+  MEM_NO_BLOCK= (1 << 0),
+  MEM_TCP_NODELAY= (1 << 1),
+  MEM_REUSE_MEMORY= (1 << 2),
+  MEM_USE_MD5= (1 << 3),
+  /* 4 was once Ketama */
+  MEM_USE_CRC= (1 << 5),
+  MEM_USE_CACHE_LOOKUPS= (1 << 6),
+  MEM_SUPPORT_CAS= (1 << 7),
+  MEM_BUFFER_REQUESTS= (1 << 8),
+  MEM_USE_SORT_HOSTS= (1 << 9),
+  MEM_VERIFY_KEY= (1 << 10),
+  /* 11 used for weighted ketama */
+  MEM_KETAMA_WEIGHTED= (1 << 11),
+  MEM_BINARY_PROTOCOL= (1 << 12),
+  MEM_HASH_WITH_PREFIX_KEY= (1 << 13),
+  MEM_NOREPLY= (1 << 14),
+  MEM_USE_UDP= (1 << 15),
+  MEM_AUTO_EJECT_HOSTS= (1 << 16)
+} memcached_flags;
+
+/* Hashing algo */
+
+LIBMEMCACHED_LOCAL
+void md5_signature(const unsigned char *key, unsigned int length, unsigned char *result);
+LIBMEMCACHED_LOCAL
+uint32_t hash_crc32(const char *data,
+                    size_t data_len);
+#ifdef HAVE_HSIEH_HASH
+LIBMEMCACHED_LOCAL
+uint32_t hsieh_hash(const char *key, size_t key_length);
 #endif
+LIBMEMCACHED_LOCAL
+uint32_t murmur_hash(const char *key, size_t key_length);
+LIBMEMCACHED_LOCAL
+uint32_t jenkins_hash(const void *key, size_t length, uint32_t initval);
 
-memcached_return_t run_distribution(memcached_st *ptr);
+LIBMEMCACHED_LOCAL
+memcached_return memcached_connect(memcached_server_st *ptr);
+LIBMEMCACHED_LOCAL
+memcached_return memcached_response(memcached_server_st *ptr,
+                                    char *buffer, size_t buffer_length,
+                                    memcached_result_st *result);
+LIBMEMCACHED_LOCAL
+void memcached_quit_server(memcached_server_st *ptr, uint8_t io_death);
 
-#ifdef __cplusplus
-static inline void memcached_server_response_increment(memcached_instance_st* instance)
-{
-  instance->events(POLLIN);
-  instance->cursor_active_++;
+#define memcached_server_response_increment(A) (A)->cursor_active++
+#define memcached_server_response_decrement(A) (A)->cursor_active--
+#define memcached_server_response_reset(A) (A)->cursor_active=0
+
+LIBMEMCACHED_LOCAL
+memcached_return memcached_do(memcached_server_st *ptr, const void *commmand,
+                              size_t command_length, uint8_t with_flush);
+LIBMEMCACHED_LOCAL
+memcached_return value_fetch(memcached_server_st *ptr,
+                             char *buffer,
+                             memcached_result_st *result);
+LIBMEMCACHED_LOCAL
+void server_list_free(memcached_st *ptr, memcached_server_st *servers);
+
+LIBMEMCACHED_LOCAL
+memcached_return memcached_key_test(const char **keys, size_t *key_length,
+                                    size_t number_of_keys);
+
+
+LIBMEMCACHED_LOCAL
+uint32_t generate_hash(memcached_st *ptr, const char *key, size_t key_length);
+
+LIBMEMCACHED_LOCAL
+memcached_return memcached_purge(memcached_server_st *ptr);
+
+static inline memcached_return memcached_validate_key_length(size_t key_length,
+                                                             bool binary) {
+  unlikely (key_length == 0)
+    return MEMCACHED_BAD_KEY_PROVIDED;
+
+  if (binary)
+  {
+    unlikely (key_length > 0xffff)
+      return MEMCACHED_BAD_KEY_PROVIDED;
+  }
+  else
+  {
+    unlikely (key_length >= MEMCACHED_MAX_KEY)
+      return MEMCACHED_BAD_KEY_PROVIDED;
+  }
+
+  return MEMCACHED_SUCCESS;
 }
-#endif
 
-#define memcached_server_response_decrement(A) (A)->cursor_active_--
-#define memcached_server_response_reset(A) (A)->cursor_active_=0
-
-#define memcached_instance_response_increment(A) (A)->cursor_active_++
-#define memcached_instance_response_decrement(A) (A)->cursor_active_--
-#define memcached_instance_response_reset(A) (A)->cursor_active_=0
-
-#ifdef __cplusplus
-}
-#endif
-
-#ifdef __cplusplus
-bool memcached_purge(memcached_instance_st*);
-memcached_instance_st* memcached_instance_by_position(const memcached_st *ptr, uint32_t server_key);
-#endif
+#endif /* LIBMEMCACHED_COMMON_H */

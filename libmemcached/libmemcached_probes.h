@@ -1,56 +1,18 @@
-/*  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
- *
- *  Libmemcached library
- *
- *  Copyright (C) 2011 Data Differential, http://datadifferential.com/
- *  Copyright (C) 2006-2009 Brian Aker All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are
- *  met:
- *
- *      * Redistributions of source code must retain the above copyright
- *  notice, this list of conditions and the following disclaimer.
- *
- *      * Redistributions in binary form must reproduce the above
- *  copyright notice, this list of conditions and the following disclaimer
- *  in the documentation and/or other materials provided with the
- *  distribution.
- *
- *      * The names of its contributors may not be used to endorse or
- *  promote products derived from this software without specific prior
- *  written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- */
-
-#pragma once
-
-
 /*
  * This file contains the definition of the various probes supported by
  * libmemcached. Currently it only support DTRACE, but just create an
  * implementation of the following macros to create your own sort of
  * probing :)
  */
+#ifndef	LIBMEMCACHED_PROBES_H
+#define	LIBMEMCACHED_PROBES_H
 
 #ifdef HAVE_DTRACE
 /*
  * Create the DTrace probes on the system using it (to support both Solaris
  * and MacOS X
  */
-#include "libmemcached/dtrace_probes.h"
+#include "dtrace_probes.h"
 
 #else
 /*
@@ -86,10 +48,6 @@
 #define	LIBMEMCACHED_MEMCACHED_GET_END_ENABLED() (0)
 #define	LIBMEMCACHED_MEMCACHED_GET_START()
 #define	LIBMEMCACHED_MEMCACHED_GET_START_ENABLED() (0)
-#define	LIBMEMCACHED_MEMCACHED_TOUCH_END()
-#define	LIBMEMCACHED_MEMCACHED_TOUCH_END_ENABLED() (0)
-#define	LIBMEMCACHED_MEMCACHED_TOUCH_START()
-#define	LIBMEMCACHED_MEMCACHED_TOUCH_START_ENABLED() (0)
 #define	LIBMEMCACHED_MEMCACHED_INCREMENT_END()
 #define	LIBMEMCACHED_MEMCACHED_INCREMENT_END_ENABLED() (0)
 #define	LIBMEMCACHED_MEMCACHED_INCREMENT_START()
@@ -116,3 +74,5 @@
 #define	LIBMEMCACHED_MEMCACHED_SET_START_ENABLED() (0)
 
 #endif
+
+#endif	/* LIBMEMCACHED_PROBES_H */
