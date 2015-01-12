@@ -150,14 +150,14 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
    enum yytokentype {
      COMMENT = 258,
      END = 259,
-     ERROR = 260,
+     CSL_ERROR = 260,
      RESET = 261,
      PARSER_DEBUG = 262,
      INCLUDE = 263,
      CONFIGURE_FILE = 264,
      EMPTY_LINE = 265,
      SERVER = 266,
-     SOCKET = 267,
+     CSL_SOCKET = 267,
      SERVERS = 268,
      SERVERS_OPTION = 269,
      UNKNOWN_OPTION = 270,
@@ -207,9 +207,9 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
      CONSISTENT = 314,
      MODULA = 315,
      RANDOM = 316,
-     TRUE = 317,
-     FALSE = 318,
-     FLOAT = 319,
+     CSL_TRUE = 317,
+     CSL_FALSE = 318,
+     CSL_FLOAT = 319,
      NUMBER = 320,
      PORT = 321,
      WEIGHT_START = 322,
@@ -562,9 +562,9 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "COMMENT", "END", "ERROR", "RESET",
+  "$end", "error", "$undefined", "COMMENT", "END", "CSL_ERROR", "RESET",
   "PARSER_DEBUG", "INCLUDE", "CONFIGURE_FILE", "EMPTY_LINE", "SERVER",
-  "SOCKET", "SERVERS", "SERVERS_OPTION", "UNKNOWN_OPTION", "UNKNOWN",
+  "CSL_SOCKET", "SERVERS", "SERVERS_OPTION", "UNKNOWN_OPTION", "UNKNOWN",
   "BINARY_PROTOCOL", "BUFFER_REQUESTS", "CONNECT_TIMEOUT", "DISTRIBUTION",
   "HASH", "HASH_WITH_NAMESPACE", "IO_BYTES_WATERMARK", "IO_KEY_PREFETCH",
   "IO_MSG_WATERMARK", "KETAMA_HASH", "KETAMA_WEIGHTED", "NOREPLY",
@@ -574,12 +574,12 @@ static const char *const yytname[] =
   "USER_DATA", "USE_UDP", "VERIFY_KEY", "_TCP_KEEPALIVE", "_TCP_KEEPIDLE",
   "_TCP_NODELAY", "FETCH_VERSION", "NAMESPACE", "POOL_MIN", "POOL_MAX",
   "MD5", "CRC", "FNV1_64", "FNV1A_64", "FNV1_32", "FNV1A_32", "HSIEH",
-  "MURMUR", "JENKINS", "CONSISTENT", "MODULA", "RANDOM", "TRUE", "FALSE",
-  "','", "'='", "FLOAT", "NUMBER", "PORT", "WEIGHT_START", "IPADDRESS",
-  "HOSTNAME", "STRING", "QUOTED_STRING", "FILE_PATH", "' '", "$accept",
-  "begin", "statement", "expression", "behaviors", "behavior_number",
-  "behavior_boolean", "optional_port", "optional_weight", "hash", "string",
-  "distribution", 0
+  "MURMUR", "JENKINS", "CONSISTENT", "MODULA", "RANDOM", "CSL_TRUE",
+  "CSL_FALSE", "','", "'='", "CSL_FLOAT", "NUMBER", "PORT", "WEIGHT_START",
+  "IPADDRESS", "HOSTNAME", "STRING", "QUOTED_STRING", "FILE_PATH", "' '",
+  "$accept", "begin", "statement", "expression", "behaviors",
+  "behavior_number", "behavior_boolean", "optional_port",
+  "optional_weight", "hash", "string", "distribution", 0
 };
 #endif
 

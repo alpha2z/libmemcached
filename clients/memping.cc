@@ -9,7 +9,7 @@
  * Summary:
  *
  */
-#include "config.h"
+#include "mem_config.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -144,6 +144,7 @@ void options_parse(int argc, char *argv[])
 
     case OPT_USERNAME:
       opt_username= optarg;
+      opt_binary= true;
       break;
 
     case OPT_PASSWD:
