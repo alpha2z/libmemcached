@@ -290,9 +290,6 @@
 /* Define to 1 if you have the `setppriv' function. */
 #undef HAVE_SETPPRIV
 
-/* Enable code which requires shared library support. Like backtrace(). */
-#undef HAVE_SHARED_ENABLED
-
 /* Define to 1 if you have the `sigignore' function. */
 #undef HAVE_SIGIGNORE
 
@@ -442,6 +439,9 @@
 /* Name of the memcached binary used in make test */
 #undef MEMCACHED_BINARY
 
+/* Memcached binary version */
+#undef MEMCACHED_VERSION
+
 /* Name of the mysqld binary used in make test */
 #undef MYSQLD_BINARY
 
@@ -501,9 +501,6 @@
 
 /* Whether we build for Linux */
 #undef TARGET_OS_LINUX
-
-/* Whether we build for OSX */
-#undef TARGET_OS_OSX
 
 /* Whether we are building for Solaris */
 #undef TARGET_OS_SOLARIS

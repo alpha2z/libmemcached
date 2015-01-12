@@ -1,6 +1,6 @@
 Name:      libmemcached
 Summary:   memcached C library and command line tools
-Version:   1.0.16
+Version:   1.0.17
 Release:   1
 License:   BSD
 Group:     System Environment/Libraries
@@ -25,7 +25,6 @@ BuildRequires: glibc-devel
 BuildRequires: glibc-headers
 BuildRequires: grep
 BuildRequires: gzip
-BuildRequires: hostname
 BuildRequires: libevent-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libuuid-devel

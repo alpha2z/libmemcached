@@ -1,4 +1,4 @@
-.TH "MEMCACHED_SERVER_LIST_COUNT" "3" "January 31, 2013" "1.0.16" "libmemcached"
+.TH "MEMCACHED_SERVER_LIST_COUNT" "3" "April 03, 2013" "1.0.17" "libmemcached"
 .SH NAME
 memcached_server_list_count \- libmemcached Documentation
 .
@@ -35,7 +35,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 #include <libmemcached/memcached.h>
 .INDENT 0.0
 .TP
-.B memcached_server_instance_st
+.B const memcached_instance_st *
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -47,7 +47,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B const \fI\%memcached_server_instance_st\fP memcached_server_list(memcached_st\fI\ *ptr\fP)
+.B const const memcached_instance_st * memcached_server_list(memcached_st\fI\ *ptr\fP)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -63,11 +63,11 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B const char *memcached_server_error(\fI\%memcached_server_instance_st\fP\fI\ instance\fP)
+.B const char *memcached_server_error(const memcached_instance_st *\fI\ instance\fP)
 .UNINDENT
 .INDENT 0.0
 .TP
-.B void memcached_server_error_reset(\fI\%memcached_server_instance_st\fP\fI\ list\fP)
+.B void memcached_server_error_reset(const memcached_instance_st *\fI\ list\fP)
 .UNINDENT
 .sp
 Deprecated since version 0.39.

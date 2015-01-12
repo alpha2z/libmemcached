@@ -1,4 +1,4 @@
-.TH "MEMCACHED_SERVER_COUNT" "3" "January 31, 2013" "1.0.16" "libmemcached"
+.TH "MEMCACHED_SERVER_COUNT" "3" "April 03, 2013" "1.0.17" "libmemcached"
 .SH NAME
 memcached_server_count \- libmemcached Documentation
 .
@@ -59,11 +59,11 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B memcached_server_instance_st memcached_server_by_key(memcached_st\fI\ *ptr\fP, const char\fI\ *key\fP, size_t\fI\ key_length\fP, memcached_return_t\fI\ *error\fP)
+.B const memcached_instance_st * memcached_server_by_key(memcached_st\fI\ *ptr\fP, const char\fI\ *key\fP, size_t\fI\ key_length\fP, memcached_return_t\fI\ *error\fP)
 .UNINDENT
 .INDENT 0.0
 .TP
-.B memcached_server_instance_st memcached_server_get_last_disconnect(const memcached_st\fI\ *ptr\fP)
+.B const memcached_instance_st * memcached_server_get_last_disconnect(const memcached_st\fI\ *ptr\fP)
 .UNINDENT
 .INDENT 0.0
 .TP

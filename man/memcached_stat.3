@@ -1,4 +1,4 @@
-.TH "MEMCACHED_STAT" "3" "January 31, 2013" "1.0.16" "libmemcached"
+.TH "MEMCACHED_STAT" "3" "April 03, 2013" "1.0.17" "libmemcached"
 .SH NAME
 memcached_stat \- libmemcached Documentation
 .
@@ -41,7 +41,7 @@ Get memcached statistics
 .UNINDENT
 .INDENT 0.0
 .TP
-.B memcached_return_t (*memcached_stat_fn)(memcached_server_instance_st\fI\ server\fP, const char\fI\ *key\fP, size_t\fI\ key_length\fP, const char\fI\ *value\fP, size_t\fI\ value_length\fP, void\fI\ *context\fP)
+.B memcached_return_t (*memcached_stat_fn)(const memcached_instance_st *\fI\ server\fP, const char\fI\ *key\fP, size_t\fI\ key_length\fP, const char\fI\ *value\fP, size_t\fI\ value_length\fP, void\fI\ *context\fP)
 .UNINDENT
 .INDENT 0.0
 .TP
