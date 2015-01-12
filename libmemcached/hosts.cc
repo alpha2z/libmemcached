@@ -36,6 +36,7 @@
  */
 
 #include <libmemcached/common.h>
+#include "libmemcached/assert.hpp"
 
 #include <cmath>
 #include <sys/time.h>
@@ -194,6 +195,7 @@ static memcached_return_t update_continuum(memcached_st *ptr)
     ptr->ketama.continuum= new_ptr;
     ptr->ketama.continuum_count= live_servers + MEMCACHED_CONTINUUM_ADDITION;
   }
+  assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
 
   uint64_t total_weight= 0;
   if (memcached_is_weighted_ketama(ptr))
@@ -327,9 +329,9 @@ static memcached_return_t update_continuum(memcached_st *ptr)
     pointer_counter+= pointer_per_server;
   }
 
-  WATCHPOINT_ASSERT(ptr);
-  WATCHPOINT_ASSERT(ptr->ketama.continuum);
-  WATCHPOINT_ASSERT(memcached_server_count(ptr) * MEMCACHED_POINTS_PER_SERVER <= MEMCACHED_CONTINUUM_SIZE);
+  assert_msg(ptr, "Programmer Error, no valid ptr");
+  assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
+  assert_msg(memcached_server_count(ptr) * MEMCACHED_POINTS_PER_SERVER <= MEMCACHED_CONTINUUM_SIZE, "invalid size information being given to qsort()");
   ptr->ketama.continuum_points_counter= pointer_counter;
   qsort(ptr->ketama.continuum, ptr->ketama.continuum_points_counter, sizeof(memcached_continuum_item_st), continuum_item_cmp);
 
@@ -580,7 +582,7 @@ memcached_return_t memcached_server_add_parsed(memcached_st *ptr,
                                                in_port_t port,
                                                uint32_t weight)
 {
-  char buffer[NI_MAXHOST];
+  char buffer[MEMCACHED_NI_MAXHOST];
 
   memcpy(buffer, hostname, hostname_length);
   buffer[hostname_length]= 0;

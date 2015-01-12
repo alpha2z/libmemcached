@@ -1,6 +1,6 @@
 Name:      libmemcached
 Summary:   memcached C library and command line tools
-Version:   1.0.14
+Version:   1.0.15
 Release:   1
 License:   BSD
 Group:     System Environment/Libraries
@@ -10,7 +10,6 @@ Source0:   http://download.tangent.org/libmemcached-%{version}.tar.gz
 # For test suite
 BuildRequires: bash
 BuildRequires: binutils
-BuildRequires: ccache
 BuildRequires: coreutils
 BuildRequires: cpio
 BuildRequires: cyrus-sasl-devel
@@ -20,7 +19,6 @@ BuildRequires: file
 BuildRequires: findutils
 BuildRequires: gawk
 BuildRequires: gcc
-BuildRequires: gdb
 BuildRequires: glibc
 BuildRequires: glibc-common
 BuildRequires: glibc-devel
@@ -31,14 +29,10 @@ BuildRequires: hostname
 BuildRequires: libevent-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libuuid-devel
-BuildRequires: llvm-libs
 BuildRequires: make
 BuildRequires: memcached
-BuildRequires: mysql-libs
 BuildRequires: pkgconfig
-BuildRequires: protobuf-devel
 BuildRequires: python-sphinx
-BuildRequires: qt3
 BuildRequires: sed
 BuildRequires: tar
 

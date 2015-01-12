@@ -346,6 +346,7 @@ test_st hash_sanity[] ={
 #endif
 
 test_st ketama_auto_eject_hosts[] ={
+  {"basic ketama test", true, (test_callback_fn*)ketama_TEST },
   {"auto_eject_hosts", true, (test_callback_fn*)auto_eject_hosts },
   {"output_ketama_weighted_keys", true, (test_callback_fn*)output_ketama_weighted_keys },
   {0, 0, (test_callback_fn*)0}
@@ -361,6 +362,7 @@ test_st hash_tests[] ={
   {"fnv1a_32", false, (test_callback_fn*)fnv1a_32_run },
   {"hsieh", false, (test_callback_fn*)hsieh_run },
   {"murmur", false, (test_callback_fn*)murmur_run },
+  {"murmur3", false, (test_callback_fn*)murmur3_TEST },
   {"jenkis", false, (test_callback_fn*)jenkins_run },
   {"memcached_get_hashkit", false, (test_callback_fn*)memcached_get_hashkit_test },
   {0, 0, (test_callback_fn*)0}

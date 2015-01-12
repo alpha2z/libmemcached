@@ -2,7 +2,7 @@
  *
  *  HashKit library
  *
- *  Copyright (C) 2011 Data Differential, http://datadifferential.com/
+ *  Copyright (C) 2011-2012 Data Differential, http://datadifferential.com/
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are
@@ -37,7 +37,7 @@
 
 #pragma once
 
-#include <mem_config.h>
+#include "libhashkit/hashkitcon.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -52,9 +52,10 @@
 #endif
 
 #include <libhashkit-1.0/hashkit.h>
-#include <libhashkit/is.h>
-#include <libhashkit/string.h>
-#include <libhashkit/aes.h>
+#include "libhashkit/algorithm.h"
+#include "libhashkit/is.h"
+#include "libhashkit/string.h"
+#include "libhashkit/aes.h"
 
 #ifdef __cplusplus
 extern "C" {

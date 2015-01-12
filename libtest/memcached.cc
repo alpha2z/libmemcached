@@ -34,12 +34,9 @@
  *
  */
 
-#include "mem_config.h"
+#include "libtest/yatlcon.h"
 
-#include <libtest/common.h>
-
-#include <libmemcached-1.0/memcached.h>
-#include <libmemcachedutil-1.0/util.h>
+#include "libtest/common.h"
 
 #include <cassert>
 #include <cerrno>
@@ -89,7 +86,7 @@ public:
 
   virtual const char *sasl() const
   {
-    return "-S";
+    return NULL;
   }
 
   const std::string& password() const
@@ -210,7 +207,7 @@ bool Memcached::build(size_t argc, const char *argv[])
   add_option("-M");
 #endif
 
-  if (_username.size())
+  if (sasl())
   {
     add_option(sasl());
   }

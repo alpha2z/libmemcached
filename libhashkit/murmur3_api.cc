@@ -1,8 +1,8 @@
 /*  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
  * 
- *  Gearmand client and server library.
+ *  HashKit library
  *
- *  Copyright (C) 2011 Data Differential, http://datadifferential.com/
+ *  Copyright (C) 2012 Data Differential, http://datadifferential.com/
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -35,46 +35,15 @@
  *
  */
 
-#pragma once
+#include "libhashkit/common.h"
+#include "libhashkit/murmur3.h"
 
-class Memc {
-public:
-  Memc()
-  {
-    _memc= memcached_create(NULL);
+uint32_t hashkit_murmur3(const char *key, size_t length, void *)
+{
+  const uint32_t seed= (0xdeadbeef * (uint32_t)length);
 
-    if (_memc == NULL)
-    {
-      throw "memcached_create() failed";
-    }
-  }
+  uint32_t ret;
+  MurmurHash3_x86_32(key, length, seed, &ret);
 
-  Memc(memcached_st* arg)
-  {
-    _memc= memcached_clone(NULL, arg);
-
-    if (_memc == NULL)
-    {
-      throw "memcached_clone() failed";
-    }
-  }
-
-  memcached_st* operator&() const
-  { 
-    return _memc;
-  }
-
-  memcached_st* operator->() const
-  { 
-    return _memc;
-  }
-
-  ~Memc()
-  {
-    memcached_free(_memc);
-  }
-
-private:
-  memcached_st *_memc;
-
-};
+  return ret;
+}

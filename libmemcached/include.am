@@ -26,7 +26,6 @@ noinst_HEADERS+= libmemcached/encoding_key.h
 noinst_HEADERS+= libmemcached/error.hpp 
 noinst_HEADERS+= libmemcached/flag.hpp 
 noinst_HEADERS+= libmemcached/initialize_query.h 
-noinst_HEADERS+= libmemcached/instance.h 
 noinst_HEADERS+= libmemcached/instance.hpp
 noinst_HEADERS+= libmemcached/internal.h 
 noinst_HEADERS+= libmemcached/io.h 
@@ -52,8 +51,10 @@ noinst_HEADERS+= libmemcached/virtual_bucket.h
 noinst_HEADERS+= libmemcached/watchpoint.h
 
 lib_LTLIBRARIES+= libmemcached/libmemcached.la
+EXTRA_libmemcached_libmemcached_la_DEPENDENCIES=
+libmemcached_libmemcached_la_LIBADD=
+libmemcached_libmemcached_la_LDFLAGS=
 libmemcached_libmemcached_la_CFLAGS= -DBUILDING_LIBMEMCACHED
-
 libmemcached_libmemcached_la_CXXFLAGS= -DBUILDING_LIBMEMCACHED
 
 libmemcached_libmemcached_la_SOURCES+= libmemcached/instance.cc
@@ -110,17 +111,15 @@ libmemcached_libmemcached_la_SOURCES+= libmemcached/virtual_bucket.c
 
 libmemcached/options.cc: libmemcached/csl/parser.h
 
-
-libmemcached_libmemcached_la_DEPENDENCIES=
-libmemcached_libmemcached_la_LIBADD=
-libmemcached_libmemcached_la_LDFLAGS=
 libmemcached_libmemcached_la_LDFLAGS+= -version-info ${MEMCACHED_LIBRARY_VERSION}
-libmemcached_libmemcached_la_LDFLAGS+= $(DL_LIB)
+libmemcached_libmemcached_la_LIBADD+= @DL_LIB@
 
 if HAVE_SASL
+if HAVE_LIBSASL
 libmemcached_libmemcached_la_CXXFLAGS+= @PTHREAD_CFLAGS@
 libmemcached_libmemcached_la_LIBADD+= @PTHREAD_LIBS@
-libmemcached_libmemcached_la_LIBADD+= @SASL_LDFLAGS@
+libmemcached_libmemcached_la_LIBADD+= @LIBSASL_LIB@
+endif
 endif
 
 if HAVE_DTRACE
@@ -128,7 +127,7 @@ BUILT_SOURCES+= libmemcached/dtrace_probes.h
 CLEANFILES+= libmemcached/dtrace_probes.h
 CLEANFILES+= libmemcached/libmemcached_probes.o
 
-libmemcached_libmemcached_la_DEPENDENCIES += libmemcached/libmemcached_probes.o
+EXTRA_libmemcached_libmemcached_la_DEPENDENCIES += libmemcached/libmemcached_probes.o
 libmemcached_libmemcached_la_LIBADD += libmemcached/libmemcached_probes.o
 libmemcached_libmemcached_la_SOURCES += libmemcached/libmemcached_probes.d
 endif

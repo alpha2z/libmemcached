@@ -1,4 +1,4 @@
-.TH "MEMCACHED_GENERATE_HASH_VALUE" "3" "November 14, 2012" "1.0.14" "libmemcached"
+.TH "MEMCACHED_GENERATE_HASH_VALUE" "3" "December 17, 2012" "1.0.15" "libmemcached"
 .SH NAME
 memcached_generate_hash_value \- Generating hash values directly
 .
@@ -86,6 +86,10 @@ Hash a key value
 .INDENT 0.0
 .TP
 .B MEMCACHED_HASH_HSIEH
+.UNINDENT
+.INDENT 0.0
+.TP
+.B MEMCACHED_HASH_MURMUR3
 .UNINDENT
 .sp
 Compile and link with \-lmemcachedutil \-lmemcached
