@@ -138,7 +138,7 @@ static inline uint8_t get_com_code(const memcached_storage_action_t verb, const 
   return PROTOCOL_BINARY_CMD_SET;
 }
 
-static memcached_return_t memcached_send_binary(memcached_st *ptr,
+static memcached_return_t memcached_send_binary(Memcached *ptr,
                                                 org::libmemcached::Instance* server,
                                                 uint32_t server_key,
                                                 const char *key,
@@ -201,7 +201,8 @@ static memcached_return_t memcached_send_binary(memcached_st *ptr,
     }
 #endif
 
-    return MEMCACHED_WRITE_FAILURE;
+    assert(memcached_last_error(server->root) != MEMCACHED_SUCCESS);
+    return memcached_last_error(server->root);
   }
 
   if (verb == SET_OP and ptr->number_of_replicas > 0)
@@ -244,7 +245,7 @@ static memcached_return_t memcached_send_binary(memcached_st *ptr,
   return memcached_response(server, NULL, 0, NULL);
 }
 
-static memcached_return_t memcached_send_ascii(memcached_st *ptr,
+static memcached_return_t memcached_send_ascii(Memcached *ptr,
                                                org::libmemcached::Instance* instance,
                                                const char *key,
                                                const size_t key_length,
@@ -350,7 +351,7 @@ static memcached_return_t memcached_send_ascii(memcached_st *ptr,
   return rc;
 }
 
-static inline memcached_return_t memcached_send(memcached_st *ptr,
+static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const char *group_key, size_t group_key_length,
                                                 const char *key, size_t key_length,
                                                 const char *value, size_t value_length,
@@ -359,6 +360,7 @@ static inline memcached_return_t memcached_send(memcached_st *ptr,
                                                 const uint64_t cas,
                                                 memcached_storage_action_t verb)
 {
+  Memcached* ptr= memcached2Memcached(shell);
   memcached_return_t rc;
   if (memcached_failed(rc= initialize_query(ptr, true)))
   {

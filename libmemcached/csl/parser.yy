@@ -34,6 +34,14 @@
  *
  */
 
+%{
+
+#include <libmemcached/csl/common.h>
+
+class Context;
+
+%}
+
 %error-verbose
 %debug
 %defines
@@ -42,7 +50,7 @@
 %defines "libmemcached/csl/parser.h"
 %lex-param { yyscan_t *scanner }
 %name-prefix="config_"
-%parse-param { Context *context }
+%parse-param { class Context *context }
 %parse-param { yyscan_t *scanner }
 %pure-parser
 %require "2.4"
@@ -51,7 +59,6 @@
 
 %{
 
-#include <libmemcached/csl/common.h>
 #include <libmemcached/options.hpp>
 
 #include <libmemcached/csl/context.h>
@@ -284,7 +291,7 @@ behaviors:
               parser_abort(context, "--NAMESPACE can only be called once");
             }
 
-            if ((context->rc= memcached_set_namespace(context->memc, $2.c_str, $2.size)) != MEMCACHED_SUCCESS)
+            if ((context->rc= memcached_set_namespace(*context->memc, $2.c_str, $2.size)) != MEMCACHED_SUCCESS)
             {
               parser_abort(context, memcached_last_error_message(context->memc));
             }

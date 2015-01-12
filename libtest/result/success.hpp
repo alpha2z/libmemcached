@@ -1,9 +1,8 @@
 /*  vim:expandtab:shiftwidth=2:tabstop=2:smarttab:
- * 
- *  DataDifferential Utility Library
  *
- *  Copyright (C) 2011 Data Differential, http://datadifferential.com/
- *  All rights reserved.
+ *  Data Differential YATL (i.e. libtest)  library
+ *
+ *  Copyright (C) 2012 Data Differential, http://datadifferential.com/
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are
@@ -35,40 +34,21 @@
  *
  */
 
+#pragma once
 
-#include <mem_config.h>
+namespace libtest {
 
-#include "util/operation.hpp"
-#include <string>
-
-namespace datadifferential {
-namespace util {
-
-bool Operation::response(std::string &arg)
+class __success : public __test_result
 {
-  if (_response.empty())
+public:
+  __success(const char *file, int line, const char *func);
+
+  const char* what() const throw()
   {
-    return false;
+    return "SUCCESS";
   }
 
-  if (not memcmp("OK\r\n", &_response[0], 3))
-  { }
-  else if (not memcmp("OK ", &_response[0], 3))
-  {
-    arg.append(&_response[3], _response.size() -3);
-  }
-  else if (not memcmp("ERR ", &_response[0], 4))
-  {
-    arg.append(&_response[4], _response.size() -4);
-    return false;
-  }
-  else 
-  {
-    arg.append(&_response[0], _response.size());
-  }
+private:
+};
 
-  return true;
-}
-
-} /* namespace util */
-} /* namespace datadifferential */
+} // namespace libtest

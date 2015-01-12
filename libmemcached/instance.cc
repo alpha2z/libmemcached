@@ -37,13 +37,16 @@
 
 #include <libmemcached/common.h>
 
-static inline void _server_init(org::libmemcached::Instance* self, memcached_st *root,
+static inline void _server_init(org::libmemcached::Instance* self, Memcached *root,
                                 const memcached_string_t& hostname,
                                 in_port_t port,
                                 uint32_t weight, memcached_connection_t type)
 {
   self->options.is_shutting_down= false;
   self->options.is_dead= false;
+  self->options.ready= false;
+  self->_events= 0;
+  self->_revents= 0;
   self->cursor_active_= 0;
   self->port_= port;
   self->fd= INVALID_SOCKET;
@@ -81,8 +84,7 @@ static inline void _server_init(org::libmemcached::Instance* self, memcached_st 
     self->version= UINT_MAX;
   }
   self->limit_maxbytes= 0;
-  memcpy(self->hostname, hostname.c_str, hostname.size);
-  self->hostname[hostname.size]= 0;
+  self->hostname(hostname);
 }
 
 static org::libmemcached::Instance* _server_create(org::libmemcached::Instance* self, const memcached_st *memc)
@@ -106,6 +108,27 @@ static org::libmemcached::Instance* _server_create(org::libmemcached::Instance* 
   self->options.is_initialized= true;
 
   return self;
+}
+
+void org::libmemcached::Instance::events(short arg)
+{
+  if ((_events | arg) == _events)
+  {
+    return;
+  }
+
+  _events|= arg;
+}
+
+void org::libmemcached::Instance::revents(short arg)
+{
+  if (arg)
+  {
+    options.ready= true;
+  }
+
+  _revents= arg;
+  _events&= short(~arg);
 }
 
 org::libmemcached::Instance* __instance_create_with(memcached_st *memc,
@@ -136,11 +159,6 @@ org::libmemcached::Instance* __instance_create_with(memcached_st *memc,
     memcached_io_init_udp_header(self, 0);
   }
 
-  if (memc)
-  {
-    memcached_connect_try(self);
-  }
-
   return self;
 }
 
@@ -148,12 +166,7 @@ void __instance_free(org::libmemcached::Instance* self)
 {
   memcached_quit_server(self, false);
 
-  if (self->address_info)
-  {
-    freeaddrinfo(self->address_info);
-    self->address_info= NULL;
-    self->address_info_next= NULL;
-  }
+  self->clear_addrinfo();
   assert(self->address_info_next == NULL);
 
   memcached_error_free(*self);
@@ -176,25 +189,26 @@ void memcached_instance_free(org::libmemcached::Instance* self)
   }
 }
 
-memcached_return_t memcached_server_cursor(const memcached_st *ptr,
+memcached_return_t memcached_server_cursor(const memcached_st* shell,
                                            const memcached_server_fn *callback,
                                            void *context,
                                            uint32_t number_of_callbacks)
 {
+  const Memcached* memc= memcached2Memcached(shell);
   memcached_return_t rc;
-  if (memcached_failed(rc= initialize_const_query(ptr)))
+  if (memcached_failed(rc= initialize_const_query(memc)))
   {
     return rc;
   }
 
   size_t errors= 0;
-  for (uint32_t x= 0; x < memcached_instance_list_count(ptr); x++)
+  for (uint32_t x= 0; x < memcached_instance_list_count(memc); x++)
   {
-    org::libmemcached::Instance* instance= memcached_instance_by_position(ptr, x);
+    org::libmemcached::Instance* instance= memcached_instance_by_position(memc, x);
 
     for (uint32_t y= 0; y < number_of_callbacks; y++)
     {
-      memcached_return_t ret= (*callback[y])(ptr, instance, context);
+      memcached_return_t ret= (*callback[y])(memc, instance, context);
 
       if (memcached_failed(ret))
       {
@@ -207,7 +221,7 @@ memcached_return_t memcached_server_cursor(const memcached_st *ptr,
   return errors ? MEMCACHED_SOME_ERRORS : MEMCACHED_SUCCESS;
 }
 
-memcached_return_t memcached_server_execute(memcached_st *ptr,
+memcached_return_t memcached_server_execute(memcached_st *memc,
                                             memcached_server_execute_fn callback,
                                             void *context)
 {
@@ -217,11 +231,11 @@ memcached_return_t memcached_server_execute(memcached_st *ptr,
   }
 
   bool some_errors= false;;
-  for (uint32_t x= 0; x < memcached_instance_list_count(ptr); x++)
+  for (uint32_t x= 0; x < memcached_instance_list_count(memc); x++)
   {
-    org::libmemcached::Instance* instance= memcached_instance_fetch(ptr, x);
+    org::libmemcached::Instance* instance= memcached_instance_fetch(memc, x);
 
-    memcached_return_t rc= (*callback)(ptr, instance, context);
+    memcached_return_t rc= (*callback)(memc, instance, context);
     if (rc == MEMCACHED_INVALID_ARGUMENTS)
     {
       return rc;
@@ -236,11 +250,12 @@ memcached_return_t memcached_server_execute(memcached_st *ptr,
   return MEMCACHED_SUCCESS;
 }
 
-memcached_server_instance_st memcached_server_by_key(memcached_st *ptr,
+memcached_server_instance_st memcached_server_by_key(memcached_st *shell,
                                                      const char *key,
                                                      size_t key_length,
                                                      memcached_return_t *error)
 {
+  Memcached* memc= memcached2Memcached(shell);
   memcached_return_t unused;
   if (error == NULL)
   {
@@ -249,20 +264,20 @@ memcached_server_instance_st memcached_server_by_key(memcached_st *ptr,
 
 
   memcached_return_t rc;
-  if (memcached_failed(rc= initialize_const_query(ptr)))
+  if (memcached_failed(rc= initialize_const_query(memc)))
   {
     *error= rc;
     return NULL;
   }
 
-  if (memcached_failed((memcached_key_test(*ptr, (const char **)&key, &key_length, 1))))
+  if (memcached_failed((memcached_key_test(*memc, (const char **)&key, &key_length, 1))))
   {
-    *error= memcached_last_error(ptr);
+    *error= memcached_last_error(memc);
     return NULL;
   }
 
-  uint32_t server_key= memcached_generate_hash(ptr, key, key_length);
-  return memcached_instance_by_position(ptr, server_key);
+  uint32_t server_key= memcached_generate_hash(memc, key, key_length);
+  return memcached_instance_by_position(memc, server_key);
 }
 
 /*
@@ -276,10 +291,10 @@ static org::libmemcached::Instance* memcached_instance_clone(org::libmemcached::
     return NULL;
   }
 
-  memcached_string_t hostname= { memcached_string_make_from_cstr(source->hostname) };
+  memcached_string_t hostname_= { memcached_string_make_from_cstr(source->hostname()) };
   return __instance_create_with(source->root,
                                 NULL,
-                                hostname,
+                                hostname_,
                                 source->port(), source->weight,
                                 source->type);
 }
@@ -309,15 +324,15 @@ void set_last_disconnected_host(org::libmemcached::Instance* self)
   }
 }
 
-memcached_server_instance_st memcached_server_get_last_disconnect(const memcached_st *self)
+memcached_server_instance_st memcached_server_get_last_disconnect(const memcached_st *shell)
 {
-  WATCHPOINT_ASSERT(self);
-  if (self == NULL)
+  const Memcached* self= memcached2Memcached(shell);
+  if (self)
   {
-    return 0;
+    return (memcached_server_instance_st)self->last_disconnected_server;
   }
 
-  return (memcached_server_instance_st)self->last_disconnected_server;
+  return 0;
 }
 
 void memcached_instance_next_retry(memcached_server_instance_st self, const time_t absolute_time)
@@ -328,3 +343,24 @@ void memcached_instance_next_retry(memcached_server_instance_st self, const time
     ((org::libmemcached::Instance*)self)->next_retry= absolute_time;
   }
 }
+
+namespace org {
+namespace libmemcached {
+
+  bool Instance::valid() const
+  {
+    if (fd == INVALID_SOCKET)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool Instance::is_shutting_down() const
+  {
+    return options.is_shutting_down;
+  }
+
+} // namespace libmemcached
+} // namespace org

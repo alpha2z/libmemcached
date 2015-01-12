@@ -116,6 +116,9 @@
 /* Define to 1 if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
+/* Define to 1 if you have the <features.h> header file. */
+#undef HAVE_FEATURES_H
+
 /* Define to 1 if you have the `floor' function. */
 #undef HAVE_FLOOR
 
@@ -158,6 +161,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define to 1 if the system has the type `in_port_t'. */
+#undef HAVE_IN_PORT_T
+
 /* Support for libcurl */
 #undef HAVE_LIBCURL
 
@@ -179,12 +185,6 @@
 /* Enables libmemcached Support */
 #undef HAVE_LIBMEMCACHED
 
-/* Have libmemcached-1.0/memcached.h */
-#undef HAVE_LIBMEMCACHED_MEMCACHED_H
-
-/* Have libmemcachedutil-1.0/util.h */
-#undef HAVE_LIBMEMCACHED_UTIL_H
-
 /* Define to 1 if MySQL libraries are available */
 #undef HAVE_LIBMYSQL_BUILD
 
@@ -205,6 +205,9 @@
 
 /* Define to 1 if you have the <math.h> header file. */
 #undef HAVE_MATH_H
+
+/* Define to 1 if MCHECK is found */
+#undef HAVE_MCHECK
 
 /* If Memcached binary is available */
 #undef HAVE_MEMCACHED_BINARY
@@ -545,9 +548,6 @@
 /* Version number of package */
 #undef VERSION
 
-/* Version of Windows */
-#undef WINVER
-
 /* machine is big-endian */
 #undef WORDS_BIGENDIAN
 
@@ -575,9 +575,6 @@
    <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
    #define below would cause a syntax error. */
 #undef _UINT8_T
-
-/* Magical number to make things work */
-#undef _WIN32_WINNT
 
 /* Workaround for bug in FreeBSD headers */
 #undef __APPLE_CC__

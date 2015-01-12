@@ -6,6 +6,7 @@ ACLOCAL_AMFLAGS = -I m4 -I libtest/m4
 SUFFIXES =
 .PHONY =
 TESTS =
+XFAIL_TESTS =
 CLEANFILES =
 DISTCLEANFILES =
 bin_PROGRAMS =
@@ -34,6 +35,14 @@ EXTRA_DIST+= README.win32
 
 aclocaldir= $(datadir)/aclocal
 dist_aclocal_DATA=
+
+# Build targets for Windows
+if BUILD_WIN32
+include libhashkit-1.0/include.am
+include libhashkit/include.am
+include libmemcached/include.am
+include libmemcached-1.0/include.am
+else
 
 include libtest/include.am
 
@@ -64,7 +73,6 @@ endif
 
 include libmemcachedinternal/include.am
 include libmemcachedinternal/util/include.am
-include poll/include.am
 include rpm/include.am
 include support/include.am
 include tests/include.am
@@ -72,8 +80,11 @@ include util/include.am
 include win32/include.am
 
 include m4/include.am
+endif
 
+TESTS += ${bin_PROGRAMS}
 TESTS += ${check_PROGRAMS}
+XFAIL_TESTS += ${bin_PROGRAMS}
 
 merge-clean:
 	@find ./ | $(GREP) \.gcda | xargs rm -f
@@ -138,7 +149,4 @@ maintainer-clean-local:
 	-rm -f m4/ltversion.m4
 	-rm -f m4/lt~obsolete.m4
 	-rmdir build-aux
-
-install-website: html-local
-	-rm -r -f /var/www/libmemcached/*
-	@cp -r docs/html /var/www/libmemcached
+	-rm -rf ${top_builddir}/html

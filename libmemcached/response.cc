@@ -658,7 +658,11 @@ static memcached_return_t binary_read_one_response(org::libmemcached::Instance* 
     case PROTOCOL_BINARY_CMD_DELETE:
     case PROTOCOL_BINARY_CMD_TOUCH:
       {
-        WATCHPOINT_ASSERT(bodylen == 0);
+        if (bodylen != 0)
+        {
+          char touch_buffer[32]; // @todo document this number
+          rc= memcached_safe_read(instance, buffer, sizeof(touch_buffer));
+        }
         return MEMCACHED_SUCCESS;
       }
 
@@ -805,7 +809,7 @@ static memcached_return_t _read_one_response(org::libmemcached::Instance* instan
 
   if (result == NULL)
   {
-    memcached_st *root= (memcached_st *)instance->root;
+    Memcached *root= (Memcached *)instance->root;
     result = &root->result;
   }
 

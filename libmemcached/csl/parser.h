@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 2.6.1.  */
 
 /* Bison interface for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,6 +30,15 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+#ifndef CONFIG_LIBMEMCACHED_CSL_PARSER_H
+# define CONFIG_LIBMEMCACHED_CSL_PARSER_H
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 1
+#endif
+#if YYDEBUG
+extern int config_debug;
+#endif
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -111,7 +120,6 @@
 #endif
 
 
-
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -119,5 +127,18 @@
 #endif
 
 
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int config_parse (void *YYPARSE_PARAM);
+#else
+int config_parse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int config_parse (class Context *context, yyscan_t *scanner);
+#else
+int config_parse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
 
-
+#endif /* !CONFIG_LIBMEMCACHED_CSL_PARSER_H  */

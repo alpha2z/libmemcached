@@ -6,7 +6,7 @@
 # Use and distribution licensed under the BSD license.  See
 # the COPYING file in this directory for full text.
 
-AC_INIT([libmemcached],[1.0.15],[http://libmemcached.org/])
+AC_INIT([libmemcached],[1.0.16],[http://libmemcached.org/])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -113,6 +113,7 @@ AC_CHECK_HEADERS_ONCE([arpa/inet.h])
 AC_CHECK_HEADERS_ONCE([errno.h])
 AC_CHECK_HEADERS_ONCE([execinfo.h])
 AC_CHECK_HEADERS_ONCE([fcntl.h])
+AC_CHECK_HEADERS_ONCE([features.h])
 AC_CHECK_HEADERS_ONCE([fnmatch.h])
 AC_CHECK_HEADERS_ONCE([inttypes.h])
 AC_CHECK_HEADERS_ONCE([libintl.h])
@@ -133,6 +134,7 @@ AC_CHECK_HEADERS_ONCE([stdlib.h])
 AC_CHECK_HEADERS_ONCE([sys/socket.h])
 AC_CHECK_HEADERS_ONCE([sys/sysctl.h])
 AC_CHECK_HEADERS_ONCE([sys/time.h])
+AC_CHECK_HEADERS_ONCE([sys/types.h])
 AC_CHECK_HEADERS_ONCE([sys/un.h])
 AC_CHECK_HEADERS_ONCE([sys/wait.h])
 AC_CHECK_HEADERS_ONCE([syslog.h])
@@ -189,6 +191,16 @@ AM_CONDITIONAL([BUILD_CACHE],[test "x$build_cache" = "xyes"])
 
 AX_COMPILER_VENDOR
 
+AC_CHECK_TYPES([in_port_t],,,[[
+                #ifdef HAVE_SYS_TYPES_H
+                # include <sys/types.h>
+                #endif
+                #ifdef HAVE_NETINET_IN_H
+                # include <netinet/in.h>
+                #endif
+                #ifdef HAVE_NETDB_H
+                # include <netdb.h>
+                #endif]])
 AC_CHECK_TYPES([ptrdiff_t])
 AC_HEADER_STDBOOL
 AC_TYPE_INT16_T
@@ -217,6 +229,7 @@ AC_CHECK_LIB([rt],[clock_gettime],
              [AC_SUBST([RT_LIB],[-lrt])
              AC_DEFINE([HAVE_CLOCK_GETTIME],[1],[Have clock_gettime])],
              [AC_DEFINE([HAVE_CLOCK_GETTIME],[0],[Have clock_gettime])])
+
 
 # Check for the ability to call dlopen (used in libhostile)
 AX_DLOPEN

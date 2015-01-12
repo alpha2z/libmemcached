@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 2.6.1.  */
 
 /* Bison implementation for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "2.5"
+#define YYBISON_VERSION "2.6.1"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -58,8 +58,6 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
-/* Using locations.  */
-#define YYLSP_NEEDED 0
 
 /* Substitute the variable and function names.  */
 #define yyparse         config_parse
@@ -70,14 +68,19 @@
 #define yydebug         config_debug
 #define yynerrs         config_nerrs
 
-
 /* Copy the first part of user declarations.  */
-
-/* Line 268 of yacc.c  */
-#line 52 "libmemcached/csl/parser.yy"
+/* Line 336 of yacc.c  */
+#line 37 "libmemcached/csl/parser.yy"
 
 
 #include <libmemcached/csl/common.h>
+
+class Context;
+
+/* Line 336 of yacc.c  */
+#line 60 "libmemcached/csl/parser.yy"
+
+
 #include <libmemcached/options.hpp>
 
 #include <libmemcached/csl/context.h>
@@ -119,14 +122,16 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
 
 
 
+/* Line 336 of yacc.c  */
+#line 127 "libmemcached/csl/parser.cc"
 
-/* Line 268 of yacc.c  */
-#line 125 "libmemcached/csl/parser.cc"
-
-/* Enabling traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 1
-#endif
+# ifndef YY_NULL
+#  if defined __cplusplus && 201103L <= __cplusplus
+#   define YY_NULL nullptr
+#  else
+#   define YY_NULL 0
+#  endif
+# endif
 
 /* Enabling verbose error messages.  */
 #ifdef YYERROR_VERBOSE
@@ -136,11 +141,17 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
 # define YYERROR_VERBOSE 1
 #endif
 
-/* Enabling the token table.  */
-#ifndef YYTOKEN_TABLE
-# define YYTOKEN_TABLE 0
+/* In a future release of Bison, this section will be replaced
+   by #include "parser.h".  */
+#ifndef CONFIG_LIBMEMCACHED_CSL_PARSER_H
+# define CONFIG_LIBMEMCACHED_CSL_PARSER_H
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 1
 #endif
-
+#if YYDEBUG
+extern int config_debug;
+#endif
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -222,7 +233,6 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
 #endif
 
 
-
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -230,11 +240,26 @@ inline void __config_error(Context *context, yyscan_t *scanner, const char *erro
 #endif
 
 
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int config_parse (void *YYPARSE_PARAM);
+#else
+int config_parse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int config_parse (class Context *context, yyscan_t *scanner);
+#else
+int config_parse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
+
+#endif /* !CONFIG_LIBMEMCACHED_CSL_PARSER_H  */
+
 /* Copy the second part of user declarations.  */
 
-
-/* Line 343 of yacc.c  */
-#line 238 "libmemcached/csl/parser.cc"
+/* Line 353 of yacc.c  */
+#line 263 "libmemcached/csl/parser.cc"
 
 #ifdef short
 # undef short
@@ -340,6 +365,7 @@ YYID (yyi)
 #    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 #     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+      /* Use EXIT_SUCCESS as a witness for stdlib.h.  */
 #     ifndef EXIT_SUCCESS
 #      define EXIT_SUCCESS 0
 #     endif
@@ -431,20 +457,20 @@ union yyalloc
 #endif
 
 #if defined YYCOPY_NEEDED && YYCOPY_NEEDED
-/* Copy COUNT objects from FROM to TO.  The source and destination do
+/* Copy COUNT objects from SRC to DST.  The source and destination do
    not overlap.  */
 # ifndef YYCOPY
 #  if defined __GNUC__ && 1 < __GNUC__
-#   define YYCOPY(To, From, Count) \
-      __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
+#   define YYCOPY(Dst, Src, Count) \
+      __builtin_memcpy (Dst, Src, (Count) * sizeof (*(Src)))
 #  else
-#   define YYCOPY(To, From, Count)		\
-      do					\
-	{					\
-	  YYSIZE_T yyi;				\
-	  for (yyi = 0; yyi < (Count); yyi++)	\
-	    (To)[yyi] = (From)[yyi];		\
-	}					\
+#   define YYCOPY(Dst, Src, Count)              \
+      do                                        \
+        {                                       \
+          YYSIZE_T yyi;                         \
+          for (yyi = 0; yyi < (Count); yyi++)   \
+            (Dst)[yyi] = (Src)[yyi];            \
+        }                                       \
       while (YYID (0))
 #  endif
 # endif
@@ -547,17 +573,17 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   195,   195,   196,   200,   202,   204,   206,   211,   216,
-     220,   224,   235,   245,   255,   264,   268,   272,   276,   280,
-     292,   296,   309,   322,   329,   336,   345,   351,   355,   359,
-     363,   367,   371,   375,   379,   383,   387,   391,   395,   402,
-     406,   410,   414,   418,   422,   426,   430,   434,   438,   442,
-     446,   453,   454,   459,   460,   465,   469,   473,   477,   481,
-     485,   489,   493,   497,   504,   508,   515,   519,   523
+       0,   202,   202,   203,   207,   209,   211,   213,   218,   223,
+     227,   231,   242,   252,   262,   271,   275,   279,   283,   287,
+     299,   303,   316,   329,   336,   343,   352,   358,   362,   366,
+     370,   374,   378,   382,   386,   390,   394,   398,   402,   409,
+     413,   417,   421,   425,   429,   433,   437,   441,   445,   449,
+     453,   460,   461,   466,   467,   472,   476,   480,   484,   488,
+     492,   496,   500,   504,   511,   515,   522,   526,   530
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
+#if YYDEBUG || YYERROR_VERBOSE || 1
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
@@ -579,7 +605,7 @@ static const char *const yytname[] =
   "IPADDRESS", "HOSTNAME", "STRING", "QUOTED_STRING", "FILE_PATH", "' '",
   "$accept", "begin", "statement", "expression", "behaviors",
   "behavior_number", "behavior_boolean", "optional_port",
-  "optional_weight", "hash", "string", "distribution", 0
+  "optional_weight", "hash", "string", "distribution", YY_NULL
 };
 #endif
 
@@ -745,17 +771,18 @@ static const yytype_uint8 yystos[] =
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)					\
-do								\
-  if (yychar == YYEMPTY && yylen == 1)				\
-    {								\
-      yychar = (Token);						\
-      yylval = (Value);						\
-      YYPOPSTACK (1);						\
-      goto yybackup;						\
-    }								\
-  else								\
-    {								\
+#define YYBACKUP(Token, Value)                                  \
+do                                                              \
+  if (yychar == YYEMPTY)                                        \
+    {                                                           \
+      yychar = (Token);                                         \
+      yylval = (Value);                                         \
+      YYPOPSTACK (yylen);                                       \
+      yystate = *yyssp;                                         \
+      goto yybackup;                                            \
+    }                                                           \
+  else                                                          \
+    {                                                           \
       yyerror (context, scanner, YY_("syntax error: cannot back up")); \
       YYERROR;							\
     }								\
@@ -765,31 +792,32 @@ while (YYID (0))
 #define YYTERROR	1
 #define YYERRCODE	256
 
-
 /* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
    If N is 0, then set CURRENT to the empty location which ends
    the previous symbol: RHS[0] (always defined).  */
 
-#define YYRHSLOC(Rhs, K) ((Rhs)[K])
 #ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)				\
-    do									\
-      if (YYID (N))                                                    \
-	{								\
-	  (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;	\
-	  (Current).first_column = YYRHSLOC (Rhs, 1).first_column;	\
-	  (Current).last_line    = YYRHSLOC (Rhs, N).last_line;		\
-	  (Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
-	}								\
-      else								\
-	{								\
-	  (Current).first_line   = (Current).last_line   =		\
-	    YYRHSLOC (Rhs, 0).last_line;				\
-	  (Current).first_column = (Current).last_column =		\
-	    YYRHSLOC (Rhs, 0).last_column;				\
-	}								\
+# define YYLLOC_DEFAULT(Current, Rhs, N)                                \
+    do                                                                  \
+      if (YYID (N))                                                     \
+        {                                                               \
+          (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
+          (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
+          (Current).last_line    = YYRHSLOC (Rhs, N).last_line;         \
+          (Current).last_column  = YYRHSLOC (Rhs, N).last_column;       \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).first_line   = (Current).last_line   =              \
+            YYRHSLOC (Rhs, 0).last_line;                                \
+          (Current).first_column = (Current).last_column =              \
+            YYRHSLOC (Rhs, 0).last_column;                              \
+        }                                                               \
     while (YYID (0))
 #endif
+
+#define YYRHSLOC(Rhs, K) ((Rhs)[K])
+
 
 
 /* This macro is provided for backward compatibility. */
@@ -841,17 +869,19 @@ do {									  \
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, Context *context, yyscan_t *scanner)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, class Context *context, yyscan_t *scanner)
 #else
 static void
 yy_symbol_value_print (yyoutput, yytype, yyvaluep, context, scanner)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    Context *context;
+    class Context *context;
     yyscan_t *scanner;
 #endif
 {
+  FILE *yyo = yyoutput;
+  YYUSE (yyo);
   if (!yyvaluep)
     return;
   YYUSE (context);
@@ -877,14 +907,14 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep, context, scanner)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, Context *context, yyscan_t *scanner)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, class Context *context, yyscan_t *scanner)
 #else
 static void
 yy_symbol_print (yyoutput, yytype, yyvaluep, context, scanner)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    Context *context;
+    class Context *context;
     yyscan_t *scanner;
 #endif
 {
@@ -936,13 +966,13 @@ do {								\
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, int yyrule, Context *context, yyscan_t *scanner)
+yy_reduce_print (YYSTYPE *yyvsp, int yyrule, class Context *context, yyscan_t *scanner)
 #else
 static void
 yy_reduce_print (yyvsp, yyrule, context, scanner)
     YYSTYPE *yyvsp;
     int yyrule;
-    Context *context;
+    class Context *context;
     yyscan_t *scanner;
 #endif
 {
@@ -1109,12 +1139,12 @@ static int
 yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                 yytype_int16 *yyssp, int yytoken)
 {
-  YYSIZE_T yysize0 = yytnamerr (0, yytname[yytoken]);
+  YYSIZE_T yysize0 = yytnamerr (YY_NULL, yytname[yytoken]);
   YYSIZE_T yysize = yysize0;
   YYSIZE_T yysize1;
   enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
   /* Internationalized format string. */
-  const char *yyformat = 0;
+  const char *yyformat = YY_NULL;
   /* Arguments of yyformat. */
   char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
   /* Number of reported tokens (one for the "unexpected", one per
@@ -1174,7 +1204,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
                     break;
                   }
                 yyarg[yycount++] = yytname[yyx];
-                yysize1 = yysize + yytnamerr (0, yytname[yyx]);
+                yysize1 = yysize + yytnamerr (YY_NULL, yytname[yyx]);
                 if (! (yysize <= yysize1
                        && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
                   return 2;
@@ -1242,14 +1272,14 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, Context *context, yyscan_t *scanner)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, class Context *context, yyscan_t *scanner)
 #else
 static void
 yydestruct (yymsg, yytype, yyvaluep, context, scanner)
     const char *yymsg;
     int yytype;
     YYSTYPE *yyvaluep;
-    Context *context;
+    class Context *context;
     yyscan_t *scanner;
 #endif
 {
@@ -1270,20 +1300,6 @@ yydestruct (yymsg, yytype, yyvaluep, context, scanner)
 }
 
 
-/* Prevent warnings from -Wmissing-prototypes.  */
-#ifdef YYPARSE_PARAM
-#if defined __STDC__ || defined __cplusplus
-int yyparse (void *YYPARSE_PARAM);
-#else
-int yyparse ();
-#endif
-#else /* ! YYPARSE_PARAM */
-#if defined __STDC__ || defined __cplusplus
-int yyparse (Context *context, yyscan_t *scanner);
-#else
-int yyparse ();
-#endif
-#endif /* ! YYPARSE_PARAM */
 
 
 /*----------.
@@ -1304,11 +1320,11 @@ yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-yyparse (Context *context, yyscan_t *scanner)
+yyparse (class Context *context, yyscan_t *scanner)
 #else
 int
 yyparse (context, scanner)
-    Context *context;
+    class Context *context;
     yyscan_t *scanner;
 #endif
 #endif
@@ -1330,7 +1346,7 @@ YYSTYPE yylval;
        `yyss': related to states.
        `yyvs': related to semantic values.
 
-       Refer to the stacks thru separate pointers, to allow yyoverflow
+       Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
     /* The state stack.  */
@@ -1384,7 +1400,6 @@ YYSTYPE yylval;
      The wasted elements are never initialized.  */
   yyssp = yyss;
   yyvsp = yyvs;
-
   goto yysetstate;
 
 /*------------------------------------------------------------.
@@ -1562,30 +1577,26 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-
-/* Line 1806 of yacc.c  */
-#line 201 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 208 "libmemcached/csl/parser.yy"
     { }
     break;
 
   case 5:
-
-/* Line 1806 of yacc.c  */
-#line 203 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 210 "libmemcached/csl/parser.yy"
     { }
     break;
 
   case 6:
-
-/* Line 1806 of yacc.c  */
-#line 205 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 212 "libmemcached/csl/parser.yy"
     { }
     break;
 
   case 7:
-
-/* Line 1806 of yacc.c  */
-#line 207 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 214 "libmemcached/csl/parser.yy"
     {
             context->set_end();
             YYACCEPT;
@@ -1593,9 +1604,8 @@ yyreduce:
     break;
 
   case 8:
-
-/* Line 1806 of yacc.c  */
-#line 212 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 219 "libmemcached/csl/parser.yy"
     {
             context->rc= MEMCACHED_PARSE_USER_ERROR;
             parser_abort(context, "ERROR called directly");
@@ -1603,27 +1613,24 @@ yyreduce:
     break;
 
   case 9:
-
-/* Line 1806 of yacc.c  */
-#line 217 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 224 "libmemcached/csl/parser.yy"
     {
             memcached_reset(context->memc);
           }
     break;
 
   case 10:
-
-/* Line 1806 of yacc.c  */
-#line 221 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 228 "libmemcached/csl/parser.yy"
     {
             yydebug= 1;
           }
     break;
 
   case 11:
-
-/* Line 1806 of yacc.c  */
-#line 225 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 232 "libmemcached/csl/parser.yy"
     {
             if ((context->rc= memcached_parse_configure_file(*context->memc, (yyvsp[(3) - (3)].string).c_str, (yyvsp[(3) - (3)].string).size)) != MEMCACHED_SUCCESS)
             {
@@ -1633,9 +1640,8 @@ yyreduce:
     break;
 
   case 12:
-
-/* Line 1806 of yacc.c  */
-#line 236 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 243 "libmemcached/csl/parser.yy"
     {
             if (memcached_failed(context->rc= memcached_server_add_with_weight(context->memc, (yyvsp[(2) - (4)].server).c_str, (yyvsp[(3) - (4)].number), uint32_t((yyvsp[(4) - (4)].number)))))
             {
@@ -1648,9 +1654,8 @@ yyreduce:
     break;
 
   case 13:
-
-/* Line 1806 of yacc.c  */
-#line 246 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 253 "libmemcached/csl/parser.yy"
     {
             if (memcached_failed(context->rc= memcached_server_add_with_weight(context->memc, (yyvsp[(2) - (4)].server).c_str, (yyvsp[(3) - (4)].number), uint32_t((yyvsp[(4) - (4)].number)))))
             {
@@ -1663,9 +1668,8 @@ yyreduce:
     break;
 
   case 14:
-
-/* Line 1806 of yacc.c  */
-#line 256 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 263 "libmemcached/csl/parser.yy"
     {
             if (memcached_failed(context->rc= memcached_server_add_unix_socket_with_weight(context->memc, (yyvsp[(2) - (3)].string).c_str, uint32_t((yyvsp[(3) - (3)].number)))))
             {
@@ -1677,43 +1681,39 @@ yyreduce:
     break;
 
   case 15:
-
-/* Line 1806 of yacc.c  */
-#line 265 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 272 "libmemcached/csl/parser.yy"
     {
             memcached_set_configuration_file(context->memc, (yyvsp[(2) - (2)].string).c_str, (yyvsp[(2) - (2)].string).size);
           }
     break;
 
   case 16:
-
-/* Line 1806 of yacc.c  */
-#line 269 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 276 "libmemcached/csl/parser.yy"
     {
             context->memc->configure.initial_pool_size= uint32_t((yyvsp[(2) - (2)].number));
           }
     break;
 
   case 17:
-
-/* Line 1806 of yacc.c  */
-#line 273 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 280 "libmemcached/csl/parser.yy"
     {
             context->memc->configure.max_pool_size= uint32_t((yyvsp[(2) - (2)].number));
           }
     break;
 
   case 19:
-
-/* Line 1806 of yacc.c  */
-#line 281 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 288 "libmemcached/csl/parser.yy"
     {
             if (memcached_callback_get(context->memc, MEMCACHED_CALLBACK_PREFIX_KEY, NULL))
             {
               parser_abort(context, "--NAMESPACE can only be called once");
             }
 
-            if ((context->rc= memcached_set_namespace(context->memc, (yyvsp[(2) - (2)].string).c_str, (yyvsp[(2) - (2)].string).size)) != MEMCACHED_SUCCESS)
+            if ((context->rc= memcached_set_namespace(*context->memc, (yyvsp[(2) - (2)].string).c_str, (yyvsp[(2) - (2)].string).size)) != MEMCACHED_SUCCESS)
             {
               parser_abort(context, memcached_last_error_message(context->memc));
             }
@@ -1721,18 +1721,16 @@ yyreduce:
     break;
 
   case 20:
-
-/* Line 1806 of yacc.c  */
-#line 293 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 300 "libmemcached/csl/parser.yy"
     {
             memcached_flag(*context->memc, MEMCACHED_FLAG_IS_FETCHING_VERSION, true);
           }
     break;
 
   case 21:
-
-/* Line 1806 of yacc.c  */
-#line 297 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 304 "libmemcached/csl/parser.yy"
     {
             // Check to see if DISTRIBUTION has already been set
             if ((context->rc= memcached_behavior_set(context->memc, MEMCACHED_BEHAVIOR_DISTRIBUTION, (yyvsp[(2) - (2)].distribution))) != MEMCACHED_SUCCESS)
@@ -1748,9 +1746,8 @@ yyreduce:
     break;
 
   case 22:
-
-/* Line 1806 of yacc.c  */
-#line 310 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 317 "libmemcached/csl/parser.yy"
     {
             // Check to see if DISTRIBUTION has already been set
             if ((context->rc= memcached_behavior_set(context->memc, MEMCACHED_BEHAVIOR_DISTRIBUTION, (yyvsp[(2) - (4)].distribution))) != MEMCACHED_SUCCESS)
@@ -1766,9 +1763,8 @@ yyreduce:
     break;
 
   case 23:
-
-/* Line 1806 of yacc.c  */
-#line 323 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 330 "libmemcached/csl/parser.yy"
     {
             if (context->set_hash((yyvsp[(2) - (2)].hash)) == false)
             {
@@ -1778,9 +1774,8 @@ yyreduce:
     break;
 
   case 24:
-
-/* Line 1806 of yacc.c  */
-#line 330 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 337 "libmemcached/csl/parser.yy"
     {
             if ((context->rc= memcached_behavior_set(context->memc, (yyvsp[(1) - (2)].behavior), (yyvsp[(2) - (2)].number))) != MEMCACHED_SUCCESS)
             {
@@ -1790,9 +1785,8 @@ yyreduce:
     break;
 
   case 25:
-
-/* Line 1806 of yacc.c  */
-#line 337 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 344 "libmemcached/csl/parser.yy"
     {
             if ((context->rc= memcached_behavior_set(context->memc, (yyvsp[(1) - (1)].behavior), true)) != MEMCACHED_SUCCESS)
             {
@@ -1804,387 +1798,343 @@ yyreduce:
     break;
 
   case 26:
-
-/* Line 1806 of yacc.c  */
-#line 346 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 353 "libmemcached/csl/parser.yy"
     {
           }
     break;
 
   case 27:
-
-/* Line 1806 of yacc.c  */
-#line 352 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 359 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_REMOVE_FAILED_SERVERS;
           }
     break;
 
   case 28:
-
-/* Line 1806 of yacc.c  */
-#line 356 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 363 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_CONNECT_TIMEOUT;
           }
     break;
 
   case 29:
-
-/* Line 1806 of yacc.c  */
-#line 360 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 367 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_IO_MSG_WATERMARK;
           }
     break;
 
   case 30:
-
-/* Line 1806 of yacc.c  */
-#line 364 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 371 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_IO_BYTES_WATERMARK;
           }
     break;
 
   case 31:
-
-/* Line 1806 of yacc.c  */
-#line 368 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 375 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_IO_KEY_PREFETCH;
           }
     break;
 
   case 32:
-
-/* Line 1806 of yacc.c  */
-#line 372 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 379 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_NUMBER_OF_REPLICAS;
           }
     break;
 
   case 33:
-
-/* Line 1806 of yacc.c  */
-#line 376 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 383 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_POLL_TIMEOUT;
           }
     break;
 
   case 34:
-
-/* Line 1806 of yacc.c  */
-#line 380 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 387 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_RCV_TIMEOUT;
           }
     break;
 
   case 35:
-
-/* Line 1806 of yacc.c  */
-#line 384 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 391 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_RETRY_TIMEOUT;
           }
     break;
 
   case 36:
-
-/* Line 1806 of yacc.c  */
-#line 388 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 395 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_SND_TIMEOUT;
           }
     break;
 
   case 37:
-
-/* Line 1806 of yacc.c  */
-#line 392 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 399 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_SOCKET_RECV_SIZE;
           }
     break;
 
   case 38:
-
-/* Line 1806 of yacc.c  */
-#line 396 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 403 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_SOCKET_SEND_SIZE;
           }
     break;
 
   case 39:
-
-/* Line 1806 of yacc.c  */
-#line 403 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 410 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_BINARY_PROTOCOL;
           }
     break;
 
   case 40:
-
-/* Line 1806 of yacc.c  */
-#line 407 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 414 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_BUFFER_REQUESTS;
           }
     break;
 
   case 41:
-
-/* Line 1806 of yacc.c  */
-#line 411 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 418 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_HASH_WITH_PREFIX_KEY;
           }
     break;
 
   case 42:
-
-/* Line 1806 of yacc.c  */
-#line 415 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 422 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_NOREPLY;
           }
     break;
 
   case 43:
-
-/* Line 1806 of yacc.c  */
-#line 419 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 426 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_RANDOMIZE_REPLICA_READ;
           }
     break;
 
   case 44:
-
-/* Line 1806 of yacc.c  */
-#line 423 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 430 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_SORT_HOSTS;
           }
     break;
 
   case 45:
-
-/* Line 1806 of yacc.c  */
-#line 427 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 434 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_SUPPORT_CAS;
           }
     break;
 
   case 46:
-
-/* Line 1806 of yacc.c  */
-#line 431 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 438 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_TCP_NODELAY;
           }
     break;
 
   case 47:
-
-/* Line 1806 of yacc.c  */
-#line 435 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 442 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_TCP_KEEPALIVE;
           }
     break;
 
   case 48:
-
-/* Line 1806 of yacc.c  */
-#line 439 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 446 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_TCP_KEEPIDLE;
           }
     break;
 
   case 49:
-
-/* Line 1806 of yacc.c  */
-#line 443 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 450 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_USE_UDP;
           }
     break;
 
   case 50:
-
-/* Line 1806 of yacc.c  */
-#line 447 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 454 "libmemcached/csl/parser.yy"
     {
             (yyval.behavior)= MEMCACHED_BEHAVIOR_VERIFY_KEY;
           }
     break;
 
   case 51:
-
-/* Line 1806 of yacc.c  */
-#line 453 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 460 "libmemcached/csl/parser.yy"
     { (yyval.number)= MEMCACHED_DEFAULT_PORT;}
     break;
 
   case 52:
-
-/* Line 1806 of yacc.c  */
-#line 455 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 462 "libmemcached/csl/parser.yy"
     { }
     break;
 
   case 53:
-
-/* Line 1806 of yacc.c  */
-#line 459 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 466 "libmemcached/csl/parser.yy"
     { (yyval.number)= 1; }
     break;
 
   case 54:
-
-/* Line 1806 of yacc.c  */
-#line 461 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 468 "libmemcached/csl/parser.yy"
     { }
     break;
 
   case 55:
-
-/* Line 1806 of yacc.c  */
-#line 466 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 473 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_MD5;
           }
     break;
 
   case 56:
-
-/* Line 1806 of yacc.c  */
-#line 470 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 477 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_CRC;
           }
     break;
 
   case 57:
-
-/* Line 1806 of yacc.c  */
-#line 474 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 481 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_FNV1_64;
           }
     break;
 
   case 58:
-
-/* Line 1806 of yacc.c  */
-#line 478 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 485 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_FNV1A_64;
           }
     break;
 
   case 59:
-
-/* Line 1806 of yacc.c  */
-#line 482 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 489 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_FNV1_32;
           }
     break;
 
   case 60:
-
-/* Line 1806 of yacc.c  */
-#line 486 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 493 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_FNV1A_32;
           }
     break;
 
   case 61:
-
-/* Line 1806 of yacc.c  */
-#line 490 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 497 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_HSIEH;
           }
     break;
 
   case 62:
-
-/* Line 1806 of yacc.c  */
-#line 494 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 501 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_MURMUR;
           }
     break;
 
   case 63:
-
-/* Line 1806 of yacc.c  */
-#line 498 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 505 "libmemcached/csl/parser.yy"
     {
             (yyval.hash)= MEMCACHED_HASH_JENKINS;
           }
     break;
 
   case 64:
-
-/* Line 1806 of yacc.c  */
-#line 505 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 512 "libmemcached/csl/parser.yy"
     {
             (yyval.string)= (yyvsp[(1) - (1)].string);
           }
     break;
 
   case 65:
-
-/* Line 1806 of yacc.c  */
-#line 509 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 516 "libmemcached/csl/parser.yy"
     {
             (yyval.string)= (yyvsp[(1) - (1)].string);
           }
     break;
 
   case 66:
-
-/* Line 1806 of yacc.c  */
-#line 516 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 523 "libmemcached/csl/parser.yy"
     {
             (yyval.distribution)= MEMCACHED_DISTRIBUTION_CONSISTENT;
           }
     break;
 
   case 67:
-
-/* Line 1806 of yacc.c  */
-#line 520 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 527 "libmemcached/csl/parser.yy"
     {
             (yyval.distribution)= MEMCACHED_DISTRIBUTION_MODULA;
           }
     break;
 
   case 68:
-
-/* Line 1806 of yacc.c  */
-#line 524 "libmemcached/csl/parser.yy"
+/* Line 1787 of yacc.c  */
+#line 531 "libmemcached/csl/parser.yy"
     {
             (yyval.distribution)= MEMCACHED_DISTRIBUTION_RANDOM;
           }
     break;
 
 
-
-/* Line 1806 of yacc.c  */
-#line 2188 "libmemcached/csl/parser.cc"
+/* Line 1787 of yacc.c  */
+#line 2138 "libmemcached/csl/parser.cc"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2371,7 +2321,7 @@ yyabortlab:
   yyresult = 1;
   goto yyreturn;
 
-#if !defined(yyoverflow) || YYERROR_VERBOSE
+#if !defined yyoverflow || YYERROR_VERBOSE
 /*-------------------------------------------------.
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
@@ -2413,9 +2363,8 @@ yyreturn:
 }
 
 
-
-/* Line 2067 of yacc.c  */
-#line 529 "libmemcached/csl/parser.yy"
+/* Line 2048 of yacc.c  */
+#line 536 "libmemcached/csl/parser.yy"
  
 
 void Context::start() 
